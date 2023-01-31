@@ -5,15 +5,17 @@ const initialState = {
   moviesData: [],
   trendingData: [],
   tvShowsData: [],
+  singleMovie: [],
+  search: '',
 }
 
-// const API_URL = `https://api.themoviedb.org/3/`;
 
 export const getMovies = createAsyncThunk('movies/getMovies', async () => {
   const url = `https://api.themoviedb.org/3/discover/movie`
   const resp = await axios.get(url, {
     params: {
       api_key: process.env.REACT_APP_API_KEY,
+      
     },
   })
   const data = await resp.data.results
@@ -45,17 +47,38 @@ export const getTvShows = createAsyncThunk('movies/getTvShows', async () => {
   return data
 })
 
+export const getSingleMovie = createAsyncThunk('movies/getSingleMovie', async (payload, thunkApi) => {
+  const { id } = payload;
+  // console.log(id);
+  const url = `https://api.themoviedb.org/3/movie/${id}`
+  const resp = await axios.get(url, {
+    params: {
+      api_key: process.env.REACT_APP_API_KEY,
+      
+    },
+  })
+  const data = await resp.data
+  // console.log(data);
+  return data
+})
+
+
 const moviesSlice = createSlice({
   name: 'movies',
   initialState,
-  reducers: {},
+  reducers: {
+    setSearch: (state, action) => {
+      state.search = action.payload
+     
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getMovies.pending, (state) => {
       // console.log(state)
     })
     builder.addCase(getMovies.fulfilled, (state, action) => {
-      // console.log(action.payload);
+      // console.log(action.payload)
       state.moviesData = action.payload
     })
     builder.addCase(getTrending.pending, (state) => {
@@ -72,7 +95,15 @@ const moviesSlice = createSlice({
       // console.log(action.payload);
       state.tvShowsData = action.payload
     })
+    builder.addCase(getSingleMovie.pending, (state) => {
+      // console.log(state)
+    })
+    builder.addCase(getSingleMovie.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      state.singleMovie = action.payload
+    })
   },
 })
 
+export const { setSearch } = moviesSlice.actions
 export default moviesSlice.reducer

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleDark } from '../src/redux/features/toggle/toggleSlice'
 import Navbar from './pages/Navbar';
 import Pages from './pages/Pages';
+import Nav from './components/Nav';
 import { BrowserRouter } from 'react-router-dom';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Pages />
+      <Nav />
     </BrowserRouter>
   )
 }
