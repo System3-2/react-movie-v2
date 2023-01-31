@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useId } from 'react';
+import {
+  getMovies,
+  getTrending,
+  getTvShows,
+} from './redux/features/movies/moviesSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleDark } from '../src/redux/features/toggle/toggleSlice'
+import Navbar from './pages/Navbar';
+import Pages from './pages/Pages';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Navbar />
+      <Pages />
+    </BrowserRouter>
+  )
 }
 
 export default App;
