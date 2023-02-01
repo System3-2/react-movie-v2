@@ -6,6 +6,7 @@ const initialState = {
   trendingData: [],
   tvShowsData: [],
   singleMovie: [],
+  singleTv: [],
   search: '',
 }
 
@@ -62,6 +63,21 @@ export const getSingleMovie = createAsyncThunk('movies/getSingleMovie', async (p
   return data
 })
 
+export const getSingleTv = createAsyncThunk('movies/getSinglTv', async (payload, thunkApi) => {
+  const { id } = payload;
+  // console.log(id);
+  const url = `https://api.themoviedb.org/3/tv/${id}`
+  const resp = await axios.get(url, {
+    params: {
+      api_key: process.env.REACT_APP_API_KEY,
+      
+    },
+  })
+  const data = await resp.data
+  // console.log(data);
+  return data
+})
+
 
 const moviesSlice = createSlice({
   name: 'movies',
@@ -101,6 +117,14 @@ const moviesSlice = createSlice({
     builder.addCase(getSingleMovie.fulfilled, (state, action) => {
       // console.log(action.payload);
       state.singleMovie = action.payload
+    })
+    builder.addCase(getSingleTv.pending, (state) => {
+      // console.log(state)
+    })
+    builder.addCase(getSingleTv.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      state.singleTv = action.payload
+      // console.log(state.singleTv);
     })
   },
 })
