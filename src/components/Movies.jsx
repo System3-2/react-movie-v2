@@ -4,14 +4,14 @@ import { getMovies } from '../redux/features/movies/moviesSlice';
 import { Link } from 'react-router-dom';
 
 const Movies = () => {
-  const { moviesData } = useSelector((store) => store.movies);
+  const { moviesData, search } = useSelector((store) => store.movies);
   const dispatch = useDispatch();
   const images = 'https://image.tmdb.org/t/p/w500';
   // console.log(moviesData);
 
   useEffect(() => {
     dispatch(getMovies());
-  }, []);
+  }, [search]);
 
   return (
     <section className='m-2 p-4 grid grid-cols-2 gap-4 md:grid-cols-4 justify-center items-center '>

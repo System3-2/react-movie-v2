@@ -10,14 +10,19 @@ const initialState = {
   search: '',
 }
 
-let shown = 'discover';
 
-export const getMovies = createAsyncThunk('movies/getMovies', async () => {
-  const url = `https://api.themoviedb.org/3/discover/movie`
+
+export const getMovies = createAsyncThunk('movies/getMovies', async (dispatch, thunk ) => {
+  // console.log(dispatch, getState);
+  const { movies } =thunk.getState();
+  const { search } = movies;
+
+  console.log(search)
+  const url = `https://api.themoviedb.org/3/${search === '' ? "discover" : "search"}/movie`
   const resp = await axios.get(url, {
     params: {
       api_key: process.env.REACT_APP_API_KEY,
-      
+      query: search
     },
   })
   const data = await resp.data.results
@@ -86,14 +91,7 @@ const moviesSlice = createSlice({
   reducers: {
     setSearch: (state, action) => {
       state.search = action.payload;
-      if(state.search) {
-        console.log('true');
-        shown = state.search
-      }
-      else {
-        console.log('false');
-        shown = 'discover'
-      }
+      console.log(state)
     },
   },
 
