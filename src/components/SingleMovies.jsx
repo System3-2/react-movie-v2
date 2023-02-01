@@ -37,7 +37,7 @@ const SingleMovies = () => {
         <div className='mx-1 flex items-center gap-4 mt-4'>
           <span className=' py-2 px-4 bg-[#90cc3b] rounded-full text-black'>{vote_average}</span>
           <span className='hidden md:block py-2 px-4 bg-[#90cc3b] rounded-full text-black'>{status}</span>
-          <span className=' py-2 px-4 bg-[#90cc3b] rounded-full text-black cursor-pointer inline-block'
+          <span className=' py-2 px-4 bg-[#90cc3b] rounded-full text-black cursor-pointer inline-block md:hidden'
             onClick={() => setmovieTrailer(title)}
           >
             <AiFillPlayCircle /></span>

@@ -12,10 +12,9 @@ const MoviesTrailer = ({ title }) => {
     movieTrailer(video)
       .then(res => {
         setVideoURL(res);
-        console.log(res);
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
         setError(true);
       })
   }
@@ -30,8 +29,8 @@ const MoviesTrailer = ({ title }) => {
         className="container mx-auto flex justify-center items-center absolute top-0 left-0 right-0 md:z-50 md:top-3 md:right-16"
         url={videoURL}
         width="90%"
+        controls={true}
       />
-      {error && <div className='text-lg p-4 m-2 text-center'>Error loading the video</div>}
     </div>
   )
 }
