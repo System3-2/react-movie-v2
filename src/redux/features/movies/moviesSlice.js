@@ -10,6 +10,7 @@ const initialState = {
   search: '',
 }
 
+let shown = 'discover';
 
 export const getMovies = createAsyncThunk('movies/getMovies', async () => {
   const url = `https://api.themoviedb.org/3/discover/movie`
@@ -84,8 +85,15 @@ const moviesSlice = createSlice({
   initialState,
   reducers: {
     setSearch: (state, action) => {
-      state.search = action.payload
-     
+      state.search = action.payload;
+      if(state.search) {
+        console.log('true');
+        shown = state.search
+      }
+      else {
+        console.log('false');
+        shown = 'discover'
+      }
     },
   },
 
