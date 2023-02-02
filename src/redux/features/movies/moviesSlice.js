@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   moviesData: [],
@@ -7,133 +7,123 @@ const initialState = {
   tvShowsData: [],
   singleMovie: [],
   singleTv: [],
-  search: '',
-}
+  search: "",
+};
 
+export const getMovies = createAsyncThunk(
+  "movies/getMovies",
+  async (dispatch, thunk) => {
+    const { movies } = thunk.getState();
+    const { search } = movies;
+    console.log(search);
+    
+    const url = `https://api.themoviedb.org/3/${
+      search === "" ? "discover" : "search"
+    }/movie`;
+    const resp = await axios.get(url, {
+      params: {
+        api_key: process.env.REACT_APP_API_KEY,
+        query: search,
+      },
+    });
+    const data = await resp.data.results;
+    return data;
+  }
+);
 
-
-export const getMovies = createAsyncThunk('movies/getMovies', async (dispatch, thunk ) => {
-  // console.log(dispatch, getState);
-  const { movies } =thunk.getState();
-  const { search } = movies;
-
-  console.log(search)
-  const url = `https://api.themoviedb.org/3/${search === '' ? "discover" : "search"}/movie`
-  const resp = await axios.get(url, {
-    params: {
-      api_key: process.env.REACT_APP_API_KEY,
-      query: search
-    },
-  })
-  const data = await resp.data.results
-  // console.log(data);
-  return data
-})
-
-export const getTrending = createAsyncThunk('movies/getTrending', async () => {
-  const url = `https://api.themoviedb.org/3/trending/all/day`
-  const resp = await axios.get(url, {
-    params: {
-      api_key: process.env.REACT_APP_API_KEY,
-    },
-  })
-  const data = await resp.data.results
-  // console.log(data);
-  return data
-})
-
-export const getTvShows = createAsyncThunk('movies/getTvShows', async () => {
-  const url = `https://api.themoviedb.org/3/discover/tv`
+export const getTrending = createAsyncThunk("movies/getTrending", async () => {
+  const url = `https://api.themoviedb.org/3/trending/all/day`;
   const resp = await axios.get(url, {
     params: {
       api_key: process.env.REACT_APP_API_KEY,
     },
-  })
-  const data = await resp.data.results
-  // console.log(data);
-  return data
-})
+  });
+  const data = await resp.data.results;
+  return data;
+});
 
-export const getSingleMovie = createAsyncThunk('movies/getSingleMovie', async (payload, thunkApi) => {
-  const { id } = payload;
-  // console.log(id);
-  const url = `https://api.themoviedb.org/3/movie/${id}`
-  const resp = await axios.get(url, {
-    params: {
-      api_key: process.env.REACT_APP_API_KEY,
-      
-    },
-  })
-  const data = await resp.data
-  // console.log(data);
-  return data
-})
+export const getTvShows = createAsyncThunk(
+  "movies/getTvShows",
+  async (dispatch, thunk) => {
+    const { movies } = thunk.getState();
+    const { search } = movies;
 
-export const getSingleTv = createAsyncThunk('movies/getSinglTv', async (payload, thunkApi) => {
-  const { id } = payload;
-  // console.log(id);
-  const url = `https://api.themoviedb.org/3/tv/${id}`
-  const resp = await axios.get(url, {
-    params: {
-      api_key: process.env.REACT_APP_API_KEY,
-      
-    },
-  })
-  const data = await resp.data
-  // console.log(data);
-  return data
-})
+    const url = `https://api.themoviedb.org/3/${
+      search === "" ? "discover" : "search"
+    }/tv`;
+    const resp = await axios.get(url, {
+      params: {
+        api_key: process.env.REACT_APP_API_KEY,
+        query: search,
+      },
+    });
+    const data = await resp.data.results;
+    return data;
+  }
+);
 
+export const getSingleMovie = createAsyncThunk(
+  "movies/getSingleMovie",
+  async (payload, thunkApi) => {
+    const { id } = payload;
+    const url = `https://api.themoviedb.org/3/movie/${id}`;
+    const resp = await axios.get(url, {
+      params: {
+        api_key: process.env.REACT_APP_API_KEY,
+      },
+    });
+    const data = await resp.data;
+    return data;
+  }
+);
+
+export const getSingleTv = createAsyncThunk(
+  "movies/getSinglTv",
+  async (payload, thunkApi) => {
+    const { id } = payload;
+    const url = `https://api.themoviedb.org/3/tv/${id}`;
+    const resp = await axios.get(url, {
+      params: {
+        api_key: process.env.REACT_APP_API_KEY,
+      },
+    });
+    const data = await resp.data;
+    return data;
+  }
+);
 
 const moviesSlice = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
   reducers: {
     setSearch: (state, action) => {
       state.search = action.payload;
-      console.log(state)
     },
   },
 
   extraReducers: (builder) => {
-    builder.addCase(getMovies.pending, (state) => {
-      // console.log(state)
-    })
+    builder.addCase(getMovies.pending, (state) => {});
     builder.addCase(getMovies.fulfilled, (state, action) => {
-      // console.log(action.payload)
-      state.moviesData = action.payload
-    })
-    builder.addCase(getTrending.pending, (state) => {
-      // console.log(state)
-    })
+      state.moviesData = action.payload;
+    });
+    builder.addCase(getTrending.pending, (state) => {});
     builder.addCase(getTrending.fulfilled, (state, action) => {
-      // console.log(action.payload);
-      state.trendingData = action.payload
-    })
-    builder.addCase(getTvShows.pending, (state) => {
-      // console.log(state)
-    })
+      state.trendingData = action.payload;
+    });
+    builder.addCase(getTvShows.pending, (state) => {});
     builder.addCase(getTvShows.fulfilled, (state, action) => {
-      // console.log(action.payload);
-      state.tvShowsData = action.payload
-    })
-    builder.addCase(getSingleMovie.pending, (state) => {
-      // console.log(state)
-    })
+      state.tvShowsData = action.payload;
+    });
+    builder.addCase(getSingleMovie.pending, (state) => {});
     builder.addCase(getSingleMovie.fulfilled, (state, action) => {
-      // console.log(action.payload);
-      state.singleMovie = action.payload
-    })
-    builder.addCase(getSingleTv.pending, (state) => {
-      // console.log(state)
-    })
+      state.singleMovie = action.payload;
+    });
+    builder.addCase(getSingleTv.pending, (state) => {});
     builder.addCase(getSingleTv.fulfilled, (state, action) => {
-      // console.log(action.payload);
-      state.singleTv = action.payload
-      // console.log(state.singleTv);
-    })
+      state.singleTv = action.payload;
+    });
   },
-})
+});
 
-export const { setSearch } = moviesSlice.actions
-export default moviesSlice.reducer
+export const { setSearch } = moviesSlice.actions;
+export default moviesSlice.reducer;

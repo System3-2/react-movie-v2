@@ -46,7 +46,9 @@ const SingleMovies = () => {
       </div>
 
       {trailer ? <MoviesTrailer title={title} /> : <div className='p-2 m-8 object-cover'>
-        <img className='w-full rounded-lg' src={images + poster_path} alt={title} />
+        <img
+          className='w-full rounded-lg' src={poster_path ? images + poster_path : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'}
+          alt={title} />
       </div>}
 
       {/* { trailer &&} */}

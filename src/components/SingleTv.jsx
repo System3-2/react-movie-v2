@@ -14,7 +14,7 @@ const SingleTv = () => {
   const { singleTv } = useSelector(store => store.movies);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { name, overview, poster_path, vote_average, status, homePage, first_air_date, number_of_episodes, number_of_seasons  } = singleTv;
+  const { name, overview, poster_path, vote_average, status, homePage, first_air_date, number_of_episodes, number_of_seasons } = singleTv;
   const images = 'https://image.tmdb.org/t/p/w500';
   // console.log(singleTv);
 
@@ -39,7 +39,7 @@ const SingleTv = () => {
           <span className=' py-2 px-4 bg-[#90cc3b] rounded-full text-black'>{vote_average}</span>
           <span className='hidden md:block py-2 px-4 bg-[#90cc3b] rounded-full text-black'>{status}</span>
           <span className=' py-2 px-4 bg-[#90cc3b] rounded-full text-black cursor-pointer inline-block md:hidden'
-          onClick={() => setmovieTrailer(name)}
+            onClick={() => setmovieTrailer(name)}
           ><AiFillPlayCircle /></span>
         </div>
 
@@ -56,7 +56,9 @@ const SingleTv = () => {
       </div> */}
 
       {trailer ? <MoviesTrailer title={name} /> : <div className='p-2 m-8 object-cover'>
-        <img className='w-full rounded-lg' src={images + poster_path} alt={name} />
+        <img
+          className='w-full rounded-lg' src={poster_path ? images + poster_path : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'}
+          alt={name} />
       </div>}
 
       {trailer && <BsXLg className='absolute top-36 right-12 float-right' onClick={() => setTrailer(!trailer)} />}

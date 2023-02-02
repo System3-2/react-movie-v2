@@ -22,7 +22,9 @@ const Trending = () => {
         return <Link to={`/movies/${id}`} key={id}
           className="rounded-2xl relative border-4 border-[#90cc3b] dark:border-inherit">
           <div className='rounded-lg object-fit '>
-            <img src={images + poster_path} alt="movie" />
+            <img
+              src={poster_path ? images + poster_path : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'}
+              alt="movie" />
           </div>
 
           {/* <div className='p-4 m-2 flex items-center justify-center'>

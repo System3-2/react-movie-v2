@@ -25,7 +25,9 @@ const Navbar = () => {
         <div className='p-4 m-2 hidden md:flex'>
           <form onSubmit={(e) => e.preventDefault()}>
             <input type="text"
-              onChange={(e) => dispatch(setSearch(e.target.value))}
+              onChange={(e) => {
+                dispatch(setSearch(e.target.value))
+              }}
               value={search}
               placeholder="search"
               className="p-4 rounded-lg border-4 border-[#90cc3b] outline-none bg-transparent text-black dark:text-inherit"
@@ -42,7 +44,9 @@ const Navbar = () => {
           className='mx-8 flex justify-center items-center absolute top-36 left-0 right-0 bg-black dark:bg-slate-100 p-9 md:hidden rounded-lg z-50 '>
           <form onSubmit={(e) => e.preventDefault()}>
             <input type="text"
-              onChange={(e) => dispatch(setSearch(e.target.value))}
+              onChange={(e) => {
+                dispatch(setSearch(e.target.value))
+              }}
               value={search}
               placeholder="search"
               className="p-4 rounded-lg border-4 border-[#90cc3b] outline-none bg-transparent text-white dark:text-black"
